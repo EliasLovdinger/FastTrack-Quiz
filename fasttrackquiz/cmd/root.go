@@ -227,7 +227,7 @@ func Execute() {
 	//Returns score so i can use it below
 	var score = Answer(answer, name, TimeSeconds)
 
-	fmt.Printf("Thanks "+name+" that was all the questions, you have a better result than this many: people" + Performance(score))
+	fmt.Printf("Thanks "+name+" that was all the questions, you have a better result than this many people: " + Performance(score))
 	fmt.Printf("\nPress enter to see your result compared to others")
 	var stop string
 	fmt.Scanln(&stop)
