@@ -87,9 +87,9 @@ func Answer(answer [6]string, name string, time float64)int {
 	}
 	if answer[5] == "1" {
 		score++
-		fmt.Printf("Question 5 was correct \n")
+		fmt.Printf("Question 6 was correct \n")
 	} else {
-		fmt.Printf("Question 5 was inccorrect \n")
+		fmt.Printf("Question 6 was inccorrect \n")
 	}
 	//--
 	payload, err := json.Marshal(map[string]interface{}{
@@ -169,15 +169,22 @@ func ShowScore() {
 func Performance(score int)string {
 
 	Scores := GetScores()
-	var nrOfpeopleBeaten int
+	var totalAmountOfPeople int = 0
+	var nrOfPeopleBeaten int = 0
 	//Checks for the amount of people that you have a better score then.
 	for _, s := range Scores{
 		if s.Score < score {
-			nrOfpeopleBeaten ++
+			nrOfPeopleBeaten ++
+			totalAmountOfPeople ++
+		} else {
+			totalAmountOfPeople ++
 		}
 	}
-
-	result := strconv.Itoa(nrOfpeopleBeaten)
+	//Calc for percentage of people beaten
+	var Percent float64 = float64(nrOfPeopleBeaten * 100 / totalAmountOfPeople * 100) / 100
+	
+	
+	result := fmt.Sprintf("%.2f", Percent)
 
 	return result
 }
@@ -227,7 +234,7 @@ func Execute() {
 	//Returns score so i can use it below
 	var score = Answer(answer, name, TimeSeconds)
 
-	fmt.Printf("Thanks "+name+" that was all the questions, you have a better result than this many people: " + Performance(score))
+	fmt.Printf("Thanks "+name+" that was all the questions, you scored higher then " + Performance(score) + "%% of the people")
 	fmt.Printf("\nPress enter to see your result compared to others")
 	var stop string
 	fmt.Scanln(&stop)
@@ -246,3 +253,4 @@ func init() {
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
+
